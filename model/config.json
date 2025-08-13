@@ -1,0 +1,36 @@
+{
+    "model_name": "conformer_spoken_digit_classifier",
+    "model_type": "conformer",
+    "audio_params": {
+        "sample_rate": 8000,
+        "n_fft": 256,
+        "hop_length": 80,
+        "n_mels": 40
+    },
+    "input_shape": [101, 40],
+    "num_classes": 10,
+    "conformer_blocks": {
+        "num_blocks": 4,
+        "embedding_dim": 144,
+        "dropout_rate": 0.1
+    },
+    "feed_forward": {
+        "expansion_factor": 4,
+        "dropout_rate": 0.1
+    },
+    "self_attention": {
+        "num_heads": 4,
+        "key_dim": 36,
+        "dropout_rate": 0.1
+    },
+    "convolutional": {
+        "kernel_size": 32,
+        "dropout_rate": 0.1
+    },
+    "training_params": {
+        "batch_size": 32,
+        "learning_rate": 0.001,
+        "epochs": 20,
+        "optimizer": "adam"
+    }
+}

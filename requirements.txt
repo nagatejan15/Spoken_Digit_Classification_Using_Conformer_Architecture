@@ -1,0 +1,7 @@
+tensorflow
+datasets
+librosa
+numpy
+python-dotenv
+sounddevice
+scipy
