@@ -3,6 +3,7 @@ from preprocess_audio_input import preprocess_dataset
 from train import train
 from predict import evaluate_on_test_set
 from predict import prediction
+import traceback
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -12,8 +13,17 @@ forcepreprocess = forcedownload or os.getenv('FORCE_PREPROCESS').lower() in ('tr
 forcetrain = forcepreprocess or os.getenv('FORCE_TRAIN').lower() in ('true', '1', 't', 'yes', 'y')
 
 if __name__ == "__main__":
-    if download_dataset(FORCE_DOWNLOAD=forcedownload):
-        if preprocess_dataset(FORCE_PREPROCESS=forcepreprocess):
-            if train(FORCE_TRAIN=forcetrain):
+    status , e = download_dataset(FORCE_DOWNLOAD=forcedownload)
+    if status:
+        status, e = preprocess_dataset(FORCE_PREPROCESS=forcepreprocess)
+        if status:
+            status , e = train(FORCE_TRAIN=forcetrain)
+            if status:
                 evaluate_on_test_set()
                 prediction()
+            else:
+                traceback.print_exception(e)
+        else:
+            traceback.print_exception(e)
+    else:
+        traceback.print_exception(e)
